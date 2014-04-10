@@ -1,0 +1,12 @@
+en:
+  label_access_filters_plural: "Access filters"
+  label_access_filters_new: "New filter"
+  label_access_filters_user: "User"
+  label_access_filters_web: "WEB Access"
+  label_access_filters_api: "API Access"
+  label_access_filters_cidrs: "IP address(es)"
+  label_access_filters_create: "Create"
+  label_access_filters_edit: "Change"
+  label_access_filters_delete: "Delete"
+  label_access_filters_delete_confirmation: "Really delete this filter?"
+  label_access_filters_unparsable_cidr: "Incorrect CIDR: %{cidr}"

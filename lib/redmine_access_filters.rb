@@ -1,0 +1,1 @@
+require 'redmine_access_filters/patches/application_controller_patch'

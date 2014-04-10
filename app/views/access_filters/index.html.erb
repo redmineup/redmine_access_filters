@@ -1,0 +1,24 @@
+<%= link_to l(:label_access_filters_new), new_access_filter_path %>
+<table class='list'>
+  <thead>
+    <tr>
+      <th>
+        <%= l(:label_access_filters_user) %>
+      </th>
+      <th>
+        <%= l(:label_access_filters_web) %>
+      </th>
+      <th>
+        <%= l(:label_access_filters_api) %>
+      </th>
+      <th>
+        <%= l(:label_access_filters_cidrs) %>
+      </th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <%= render @access_filters %>
+  </tbody>
+</table>
+

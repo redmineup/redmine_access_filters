@@ -1,0 +1,1 @@
+resources :access_filters

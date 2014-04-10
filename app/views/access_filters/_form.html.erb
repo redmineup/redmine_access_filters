@@ -1,0 +1,24 @@
+<%= error_messages_for 'access_filter' %>
+<%= form_for @access_filter do |f| %>
+  <div class = "box tabular">  
+    <p>
+      <%= f.label :user_id, l(:label_access_filters_user) %>
+      <%= f.select :user_id, options_for_select(User.all.map{|x| [x.name, x.id]}, @access_filter.user_id) %>
+    </p>
+    <p>
+      <%= f.label :web, l(:label_access_filters_web) %>
+      <%= f.check_box :web %>
+    </p>
+    <p>
+      <%= f.label :api, l(:label_access_filters_api) %>
+      <%= f.check_box :api %>
+    </p>
+    <p>
+      <%= f.label :cidrs, l(:label_access_filters_cidrs) %>
+      <%= f.text_area :cidrs %>
+    </p>
+    <p>
+      <%= f.submit l(:label_access_filters_create) %>
+    </p>
+  <% end %>
+</div>
