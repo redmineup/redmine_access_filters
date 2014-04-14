@@ -1,4 +1,6 @@
 class AccessFiltersController < ApplicationController
+  before_filter :require_admin
+
 	def index
     @access_filters = AccessFilter.all
 	end

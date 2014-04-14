@@ -1,9 +1,15 @@
-<%= link_to l(:label_access_filters_new), new_access_filter_path %>
+<div class="contextual">
+  <%= link_to l(:label_access_filters_new_filter), new_access_filter_path, :class => 'icon icon-add' %>
+</div>
+<h2><%=l(:label_access_filters_plural)%></h2>
 <table class='list'>
   <thead>
     <tr>
       <th>
         <%= l(:label_access_filters_user) %>
+      </th>
+      <th>
+        <%= l(:label_access_filters_active) %>
       </th>
       <th>
         <%= l(:label_access_filters_web) %>

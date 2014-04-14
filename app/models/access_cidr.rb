@@ -8,4 +8,9 @@ class AccessCidr
     return true if @any
     @cidr.matches?(ip)
   end
+
+  def to_s
+    return "any" if @any
+    return @cidr.to_s if @cidr
+  end
 end

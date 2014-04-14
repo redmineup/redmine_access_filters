@@ -19,17 +19,20 @@ module RedmineAccessFilters
             Rails.logger.info "Rule for user #{User.current} was found"
             access_filter = access_filters[User.current.id]
             Rails.logger.info ": #{access_filter.inspect}"
-            unless access_filter.web || api_request?
+            if access_filter.web && !api_request?
               Rails.logger.info "Denying access because web access denied for user"
+              logout_user
               return render_error :message => 'Access denied', :status => 403 
             end
-            unless access_filter.api || !api_request?
+            if access_filter.api && api_request?
               Rails.logger.info "Denying access because API access denied for user"
+              logout_user
               return render_error :message => 'Access denied', :status => 403 
             end
             Rails.logger.info "request.remote_ip = #{request.remote_ip}"
             unless access_filter.ip_allowed(request.remote_ip)
               Rails.logger.info "Denying access because request ip #{request.remote_ip} does not match filter #{access_filter.cidrs}"
+              logout_user
               return render_error :message => 'Access denied', :status => 403 
             end
           else

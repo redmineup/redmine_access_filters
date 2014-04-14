@@ -7,11 +7,14 @@ class AccessFilter < ActiveRecord::Base
   validate :parsable_cidrs
 
   def ip_allowed(ip)
-    parsed_cidrs.any?{ |x| x.includes?(ip) }
+    parsed_cidrs.any? do |x| 
+      Rails.logger.info "Checking whether #{x} includes #{ip}"
+      x.includes?(ip)
+    end
   end
 
   def parsed_cidrs
-    cidrs.split("\n,").map{ |x| AccessCidr.new(x) }
+    cidrs.split(/[\r\n,]+/).map{ |x| AccessCidr.new(x) }
   end
 
   private
@@ -21,7 +24,9 @@ class AccessFilter < ActiveRecord::Base
   end
 
   def parsable_cidrs
-    cidrs.split("\n,").map do |x| 
+    Rails.logger.info "Cidrs = [#{cidrs}]"
+    cidrs.split(/[\r\n,]+/).compact.map do |x| 
+      Rails.logger.info "x = [#{x}]"
       begin
         AccessCidr.new(x)
       rescue

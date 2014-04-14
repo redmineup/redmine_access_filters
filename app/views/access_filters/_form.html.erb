@@ -6,6 +6,11 @@
       <%= f.select :user_id, options_for_select(User.all.map{|x| [x.name, x.id]}, @access_filter.user_id) %>
     </p>
     <p>
+      <%= f.label :active, l(:label_access_filters_active) %>
+      <%= f.check_box :active %>
+    </p>
+
+    <p>
       <%= f.label :web, l(:label_access_filters_web) %>
       <%= f.check_box :web %>
     </p>

@@ -3,15 +3,25 @@
     <%= link_to access_filter.user.try(:name) || l(:label_user_anonymous), edit_access_filter_path(access_filter) %>    
   </td>
   <td>
-    <%= check_box_tag :web, '1', access_filter.web, :disabled => true %>
+    <% if access_filter.active %>
+      <%= image_tag 'toggle_check.png' %>
+    <% end %>
   </td>
   <td>
-    <%= check_box_tag :api, '1', access_filter.api, :disabled  => true %>
+    <% if access_filter.web %>
+      <%= image_tag 'toggle_check.png' %>
+    <% end %>
+  </td>
+  <td>
+    <% if access_filter.api %>
+      <%= image_tag 'toggle_check.png' %>
+    <% end %>
   </td>
   <td>
     <%= access_filter.cidrs %>
   </td>
   <td>
+    <%= link_to l(:label_access_filters_edit), edit_access_filter_path(access_filter), :class => 'icon icon-edit' %>
     <%= link_to l(:label_access_filters_delete), access_filter_path(access_filter), :method => :delete, :confirm => l(:label_access_filters_delete_confirmation), :class => 'icon icon-del' %>
   </td>
 </tr>
