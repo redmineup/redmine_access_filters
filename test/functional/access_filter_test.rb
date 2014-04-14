@@ -53,6 +53,12 @@ class ApplicationControllerTest < ActionController::TestCase
     assert_response :success
   end
 
+  def test_allows_http_access_if_second_ip_matched
+    AccessFilter.create(:user_id => 1, :web => false, :api => false, :cidrs => "172.16.0.0/16\r\n192.168.0.1/32")
+    get :index
+    assert_response :success
+  end
+
   def test_allows_http_access_if_ip_matched_for_subnet
     AccessFilter.create(:user_id => 1, :web => false, :api => false, :cidrs => '192.168.0.0/24')
     get :index
