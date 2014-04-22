@@ -2,8 +2,8 @@
 <%= form_for @access_filter do |f| %>
   <div class = "box tabular">  
     <p>
-      <%= f.label :user_id, l(:label_access_filters_user) %>
-      <%= f.select :user_id, options_for_select(User.all.map{|x| [x.name, x.id]}, @access_filter.user_id) %>
+      <%= f.label :owner_id, l(:label_access_filters_user) %>
+      <%= f.select :owner_id, options_for_select((User.all + Group.all).map{|x| [x.name, "#{x.class}|#{x.id}"]}, "#{@access_filter.owner_type}|#{@access_filter.owner_id}") %>
     </p>
     <p>
       <%= f.label :active, l(:label_access_filters_active) %>

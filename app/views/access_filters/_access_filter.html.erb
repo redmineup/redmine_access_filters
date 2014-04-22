@@ -1,6 +1,6 @@
 <tr class="<%= cycle('odd', 'even') %>">
   <td>
-    <%= link_to access_filter.user.try(:name) || l(:label_user_anonymous), edit_access_filter_path(access_filter) %>    
+    <%= link_to access_filter.owner.try(:name) || l(:label_user_anonymous), edit_access_filter_path(access_filter) %>    
   </td>
   <td>
     <% if access_filter.active %>
@@ -19,6 +19,9 @@
   </td>
   <td>
     <%= access_filter.cidrs %>
+  </td>
+  <td>
+    <%= reorder_links('access_filter', {:action => 'update', :id => access_filter }, :put) %>
   </td>
   <td>
     <%= link_to l(:label_access_filters_edit), edit_access_filter_path(access_filter), :class => 'icon icon-edit' %>

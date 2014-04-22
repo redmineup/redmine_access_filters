@@ -14,35 +14,37 @@ module RedmineAccessFilters
         def apply_access_filters
           Rails.logger.info "=========== Applying access filters =============="
           Rails.logger.info "Current user is #{User.current}"
-          user = User.current.id
-          if access_filters.has_key?(User.current.id)
-            Rails.logger.info "Rule for user #{User.current} was found"
-            access_filter = access_filters[User.current.id]
-            Rails.logger.info ": #{access_filter.inspect}"
-            if access_filter.web && !api_request?
-              Rails.logger.info "Denying access because web access denied for user"
-              logout_user
-              return render_error :message => 'Access denied', :status => 403 
+          access_filters.each do |af|
+            Rails.logger.info "Checking af #{af}"
+            if User.current.is_or_belongs_to?(af.owner)
+              Rails.logger.info "Matched with filter #{af.id} by user"
+              if af.web && !api_request?
+                Rails.logger.info "Denying access because web access denied"
+                logout_user
+                return render_error :message => 'Access denied', :status => 403 
+              end
+              if af.api && api_request?
+                Rails.logger.info "Denying access because API access denied"
+                logout_user
+                return render_error :message => 'Access denied', :status => 403 
+              end
+              Rails.logger.info "request.remote_ip = #{request.remote_ip}"
+              unless af.ip_allowed?(request.remote_ip)
+                Rails.logger.info "Denying access because request ip #{request.remote_ip} does not match filter #{af.cidrs}"
+                logout_user
+                return render_error :message => 'Access denied', :status => 403 
+              end
+              return
             end
-            if access_filter.api && api_request?
-              Rails.logger.info "Denying access because API access denied for user"
-              logout_user
-              return render_error :message => 'Access denied', :status => 403 
-            end
-            Rails.logger.info "request.remote_ip = #{request.remote_ip}"
-            unless access_filter.ip_allowed(request.remote_ip)
-              Rails.logger.info "Denying access because request ip #{request.remote_ip} does not match filter #{access_filter.cidrs}"
-              logout_user
-              return render_error :message => 'Access denied', :status => 403 
-            end
-          else
-            Rails.logger.info "------- No filters for user"
+
+
           end
+          Rails.logger.info "No filters fit"
         end
 
         def access_filters
           Rails.cache.fetch(:access_filters) do
-            Hash[AccessFilter.all.map{ |x| [x.user.id, x]}]
+            AccessFilter.order(:position).all
           end
         end
 

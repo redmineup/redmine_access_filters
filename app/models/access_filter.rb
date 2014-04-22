@@ -1,12 +1,13 @@
 class AccessFilter < ActiveRecord::Base
-  belongs_to :user
+  belongs_to :owner, :polymorphic => true
 
   after_commit :invalidate_cache
 
-  validates_uniqueness_of :user_id
   validate :parsable_cidrs
 
-  def ip_allowed(ip)
+  acts_as_list
+
+  def ip_allowed?(ip)
     parsed_cidrs.any? do |x| 
       Rails.logger.info "Checking whether #{x} includes #{ip}"
       x.includes?(ip)
@@ -15,6 +16,16 @@ class AccessFilter < ActiveRecord::Base
 
   def parsed_cidrs
     cidrs.split(/[\r\n,]+/).map{ |x| AccessCidr.new(x) }
+  end
+
+  def owner_id=(id_and_class)
+    type, id = id_and_class.split('|')
+    self.owner_type = type
+    super id
+  end
+
+  def to_s
+    "#{owner.name}:denyweb-#{web},denyapi-#{api},ip-#{parsed_cidrs}"
   end
 
   private

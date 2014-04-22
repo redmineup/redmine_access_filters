@@ -2,7 +2,7 @@ class AccessFiltersController < ApplicationController
   before_filter :require_admin
 
 	def index
-    @access_filters = AccessFilter.all
+    @access_filters = AccessFilter.order(:position).all
 	end
 
   def new
