@@ -7,6 +7,9 @@ class AccessFilter < ActiveRecord::Base
 
   acts_as_list
 
+  # That is to clear cache on startup
+  Rails.cache.delete(:access_filters)
+
   def ip_allowed?(ip)
     parsed_cidrs.any? do |x| 
       Rails.logger.info "Checking whether #{x} includes #{ip}"
