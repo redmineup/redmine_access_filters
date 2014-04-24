@@ -1,0 +1,13 @@
+de:
+  label_access_filters_plural: "Zugangsfilter"
+  label_access_filters_new_filter: "Neuer Filter"
+  label_access_filters_user: "Benutzer"
+  label_access_filters_web: "Web Zugang verhindern"
+  label_access_filters_api: "API Zugang verhindern"
+  label_access_filters_cidrs: "IP Adressen"
+  label_access_filters_create: "Erstellen"
+  label_access_filters_edit: "Ändern"
+  label_access_filters_delete: "Löschen"
+  label_access_filters_delete_confirmation: "Wollen Sie diesen Filter wirklich löschen?"
+  label_access_filters_unparsable_cidr: "Inkorrekte CIDR: %{cidr}"
+  label_access_filters_active: "Aktiv"
