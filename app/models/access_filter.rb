@@ -15,7 +15,7 @@ class AccessFilter < ActiveRecord::Base
   end
 
   def parsed_cidrs
-    cidrs.split(/[\r\n,]+/).map{ |x| AccessCidr.new(x) }
+    cidrs.present? ? cidrs.split(/[\r\n,]+/).map{ |x| AccessCidr.new(x) } : [ AccessCidr.new('any') ]
   end
 
   def owner_id=(id_and_class)
@@ -36,12 +36,14 @@ class AccessFilter < ActiveRecord::Base
 
   def parsable_cidrs
     Rails.logger.info "Cidrs = [#{cidrs}]"
-    cidrs.split(/[\r\n,]+/).compact.map do |x| 
-      Rails.logger.info "x = [#{x}]"
-      begin
-        AccessCidr.new(x)
-      rescue
-        errors.add(:cidrs, I18n.t(:label_access_filters_unparsable_cidr, :cidr => x))
+    if cidrs?
+      cidrs.split(/[\r\n,]+/).compact.map do |x| 
+        Rails.logger.info "x = [#{x}]"
+        begin
+          AccessCidr.new(x)
+        rescue
+          errors.add(:cidrs, I18n.t(:label_access_filters_unparsable_cidr, :cidr => x))
+        end
       end
     end
   end

@@ -4,7 +4,7 @@ en:
   label_access_filters_user: "User"
   label_access_filters_web: "Deny WEB"
   label_access_filters_api: "Deny API"
-  label_access_filters_cidrs: "IP address(es)"
+  label_access_filters_cidrs: "Limit access to address range(s"
   label_access_filters_create: "Create"
   label_access_filters_edit: "Change"
   label_access_filters_delete: "Delete"

@@ -122,6 +122,13 @@ class ApplicationControllerTest < ActionController::TestCase
 
   def test_consider_active_flag
     AccessFilter.create(:owner_id => "Group|#{@group.to_param}", :web => true, :api => false, :cidrs => 'any', :active => false)    
+    get :index    
+    assert_response 200    
+  end
+
+  def test_access_filter_with_empty_cidrs_field_treated_as_any
+    AccessFilter.create(:owner_id => "Group|#{@group.to_param}", :web => false, :api => false)
+    get :index    
     assert_response 200    
   end
 
