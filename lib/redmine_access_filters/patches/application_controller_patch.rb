@@ -44,7 +44,7 @@ module RedmineAccessFilters
 
         def access_filters
           Rails.cache.fetch(:access_filters) do
-            AccessFilter.order(:position).all
+            AccessFilter.order(:position).where(:active => true)
           end
         end
 

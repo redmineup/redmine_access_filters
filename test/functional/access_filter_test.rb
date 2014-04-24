@@ -120,4 +120,9 @@ class ApplicationControllerTest < ActionController::TestCase
     assert_response 403
   end
 
+  def test_consider_active_flag
+    AccessFilter.create(:owner_id => "Group|#{@group.to_param}", :web => true, :api => false, :cidrs => 'any', :active => false)    
+    assert_response 200    
+  end
+
 end
