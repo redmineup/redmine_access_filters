@@ -1,0 +1,13 @@
+tr:
+  label_access_filters_plural: "Erişim Filtreleri"
+  label_access_filters_new_filter: "Yeni Filtre"
+  label_access_filters_user: "Kullanıcı"
+  label_access_filters_web: "WEB Engelle"
+  label_access_filters_api: "API Engelle"
+  label_access_filters_cidrs: "Adres aralıkları ile kısıtla"
+  label_access_filters_create: "Yarat"
+  label_access_filters_edit: "Değiştir"
+  label_access_filters_delete: "Sil"
+  label_access_filters_delete_confirmation: "Gerçekten bu filtreyi silmek mi istiyorsunuz?"
+  label_access_filters_unparsable_cidr: "Geçersiz CIDR: %{cidr}"
+  label_access_filters_active: "Aktif"
