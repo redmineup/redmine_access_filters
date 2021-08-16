@@ -24,4 +24,11 @@ Pluing development was sponsored by MEDEVIT (http://www.medevit.at)
 
 Checkout a redmine version, clone this plugin under plugins/redmine_acess_filters
 and run
-bundle exec rake redmine:plugins:test NAME=redmine_acess_filter
+
+    export RAILS_ENV=test
+    bundle install
+    bundle exec rake redmine:plugins NAME=redmine_access_filters
+    bundle exec rake db:test:prepare
+    bundle exec rake redmine:plugins:test
+    # run a single test
+    bundle exec ruby plugins/redmine_access_filters/test/functional/access_filter_test.rb  -n test_works_if_no_rules_exist
