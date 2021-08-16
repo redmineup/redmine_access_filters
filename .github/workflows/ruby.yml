@@ -35,7 +35,8 @@ jobs:
         uses: actions/cache@v1
         with:
           path: vendor
-          key: v3-ruby-${{ matrix.ruby }}-redmine-${{ matrix.redmine }}
+          # Updating v<x> to v<x+1> clear the cache
+          key: v4-ruby-${{ matrix.ruby }}-redmine-${{ matrix.redmine }}
 
       - name: install ruby dependencies
         run: bundle install
