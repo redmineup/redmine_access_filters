@@ -44,7 +44,7 @@ jobs:
         run: ./redmine update
 
       - name: run prepare tests
-        run: bundle exec rake db:test:prepare
+        run: ./redmine exec bundle exec rake db:test:prepare
 
       - name: run plugins tests
-        run: bundle exec rake  redmine:plugins:test
+        run: ./redmine exec bundle exec rake redmine:plugins:test

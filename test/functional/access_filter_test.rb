@@ -17,13 +17,10 @@ class ApplicationControllerTest < ActionController::TestCase
     AccessFilter.destroy_all
 
     @controller = IssuesController.new
-    @request    = ActionController::TestRequest.new
-    @response   = ActionController::TestResponse.new
     @request.session[:user_id] = 1
     @request.env['REMOTE_ADDR'] = '192.168.0.1'    
     @group = Group.create(:name => 'Test group')
     @group.users << User.find(1)
-
   end
 
   def test_works_if_no_rules_exist
@@ -45,7 +42,7 @@ class ApplicationControllerTest < ActionController::TestCase
   def test_prevents_api_access_if_specified
     AccessFilter.create(:owner_id => "User|1", :web => false, :api => true, :cidrs => 'any')
     with_settings :rest_api_enabled => '1' do
-      get :index, :format => :json, :key => User.find(1).api_key
+      get :index, :params => { :format => :json, :key => User.find(1).api_key}
     end
     assert_response 403
   end
@@ -77,7 +74,7 @@ class ApplicationControllerTest < ActionController::TestCase
   def test_allows_api_access_if_ip_matched
     AccessFilter.create(:owner_id => "User|1", :web => false, :api => false, :cidrs => '192.168.0.1')
     with_settings :rest_api_enabled => '1' do
-      get :index, :format => :json, :key => User.find(1).api_key
+      get :index, :params => {:format => :json, :key => User.find(1).api_key}
     end
 
     assert_response :success
@@ -86,7 +83,7 @@ class ApplicationControllerTest < ActionController::TestCase
   def test_allows_api_access_if_ip_matched_for_subnet
     AccessFilter.create(:owner_id => "User|1", :web => false, :api => false, :cidrs => '192.168.0.0/24')
     with_settings :rest_api_enabled => '1' do
-      get :index, :format => :json, :key => User.find(1).api_key
+      get :index, :params => {:format => :json, :key => User.find(1).api_key}
     end
 
     assert_response :success
@@ -95,7 +92,7 @@ class ApplicationControllerTest < ActionController::TestCase
   def test_does_not_allow_api_access_if_ip_mismatched_for_subnet
     AccessFilter.create(:owner_id => "User|1", :web => false, :api => false, :cidrs => '192.168.1.0/24')
     with_settings :rest_api_enabled => '1' do
-      get :index, :format => :json, :key => User.find(1).api_key
+      get :index, :params => {:format => :json, :key => User.find(1).api_key}
     end
     assert_response 403
   end
