@@ -3,7 +3,7 @@ Redmine::Plugin.register :redmine_access_filters do
   author 'Redmine CRM'
   description 'Allows setting access filters for API and regular browser access per user'
   version '1.0.0'
-  url 'http://redminecrm.com'
+  url 'https://github.com/ngiger/redmine_access_filters'
   author_url 'mailto:niklaus.giger@member.fsf.org'
   menu :admin_menu, :access_filters,
                           {:controller => 'access_filters', :action => 'index'},
