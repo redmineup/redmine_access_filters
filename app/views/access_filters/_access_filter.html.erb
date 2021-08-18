@@ -21,7 +21,7 @@
     <%= access_filter.cidrs %>
   </td>
   <td>
-    <%= reorder_links('access_filter', {:action => 'update', :id => access_filter }, :put) %>
+    <%= reorder_handle(access_filter, :param => :put) %>
   </td>
   <td>
     <%= link_to l(:label_access_filters_edit), edit_access_filter_path(access_filter), :class => 'icon icon-edit' %>
