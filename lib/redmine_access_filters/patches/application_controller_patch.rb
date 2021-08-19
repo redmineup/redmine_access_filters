@@ -5,7 +5,7 @@ module RedmineAccessFilters
         base.send(:include, InstanceMethods)
 
         base.class_eval do
-          before_filter :apply_access_filters
+          before_action :apply_access_filters
         end
         require "#{Rails.root}/plugins/redmine_access_filters/app/models/access_filter"
       end

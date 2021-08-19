@@ -5,7 +5,7 @@ class AccessFilter < ActiveRecord::Base
 
   validate :parsable_cidrs
 
-  acts_as_list
+  acts_as_tree
 
   # That is to clear cache on startup
   Rails.cache.delete(:access_filters)

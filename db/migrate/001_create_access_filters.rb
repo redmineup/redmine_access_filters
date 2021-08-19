@@ -1,4 +1,4 @@
-class CreateAccessFilters < ActiveRecord::Migration
+class CreateAccessFilters < ActiveRecord::Migration[5.2]
   def change
     create_table :access_filters do |t|
       t.references :user
